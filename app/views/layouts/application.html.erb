@@ -51,5 +51,11 @@
       </div>
     </div>
     <%= domain_html_tag(domain_asset :footer) %>
+
+    <% if controller_name == 'profiles' %>
+      <link rel="stylesheet" type="text/css" href="https://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css?key=cf87-rj21-kc73-dh41" />
+      <script type="text/javascript" src="https://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js?key=cf87-rj21-kc73-dh41"></script>
+      <%= javascript_include_tag 'pca' %>
+    <% end %>
   </body>
 </html>
