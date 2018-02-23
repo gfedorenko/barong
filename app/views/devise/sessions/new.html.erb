@@ -8,33 +8,50 @@
   <div class="container-fluid mx-3 px-5 py-4">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
-      <div class="form-group">
-        <div class="row">
-          <%= f.label :email %>
-          <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'px-1 form-control form-control-lg underlined', placeholder: 'Enter email' %>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <div class="row">
-          <%= f.label :password %>
-          <%= f.password_field :password, autocomplete: 'off', class: 'px-1 form-control form-control-lg underlined', placeholder: 'Enter password' %>
-        </div>
-      </div>
-
-      <% if devise_mapping.rememberable? -%>
+      <div id="email-form">
         <div class="form-group">
           <div class="row">
-            <%= f.label :remember_me do %>
-              <%= f.check_box :remember_me, class: 'checkbox' %>
-              Remember me
-            <% end %>
+            <%= f.label :email %>
+            <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'px-1 form-control form-control-lg underlined', placeholder: 'Enter email', required: true %>
           </div>
         </div>
-      <% end -%>
 
-      <div class="row mt-4">
-        <%= f.submit 'Submit', class: 'btn btn-block btn-success col-6' %>
+        <% if devise_mapping.rememberable? -%>
+          <div class="form-group">
+            <div class="row">
+              <%= f.label :remember_me do %>
+                <%= f.check_box :remember_me, class: 'checkbox' %>
+                Remember me
+              <% end %>
+            </div>
+          </div>
+        <% end -%>
+
+        <div class="row mt-4">
+          <a id="submit-email" class="btn btn-success text-white">Submit</a>
+        </div>
+      </div>
+
+      <div id="passwords-form" style="display: none">
+        <div class="form-group">
+          <div class="row">
+            <%= f.label :password %>
+            <%= f.password_field :password, class: 'px-1 form-control form-control-lg underlined', placeholder: 'Enter password', required: true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <%= label_tag :otp, '6-digit Google Authenticator code' %>
+            <%= text_field_tag :otp, '', autocomplete: 'off', class: 'px-1 form-control form-control-lg underlined', required: true, maxlength: 6, size: 6, pattern: '\d{6}', placeholder: 'XXXXXX' %>
+          </div>
+        </div>
+
+        <div class="row mt-4 d-flex justify-content-between">
+          <%= f.submit 'Submit', class: 'btn btn-success' %>
+          <a id="back" class="btn btn-secondary text-white">Back</a>
+        </div>
       </div>
     <% end %>
   </div>

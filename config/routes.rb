@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   use_doorkeeper
   mount API::Base, at: '/api'
 
-  devise_for :accounts
+  devise_for :accounts, controllers: {
+    sessions: 'accounts/sessions'
+  }
   root to: 'index#index', as: :index
 
   post  'phones/verification',  to: 'phones#verify'
