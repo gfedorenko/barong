@@ -17,7 +17,7 @@ if File.exist?([Rails.root, '/config', '/seed.yml'].join)
   seed = YAML.load(File.open(seed_file))
 
   app_seed = seed['oauth_application']
-  application = Doorkeeper::Application.new(skipauth: true, name: app_seed['oauth_app_name'], redirect_uri: app_seed['oauth_callback_url'])
+  application = Doorkeeper::Application.new(skipauth: app_seed['skipauth'], name: app_seed['oauth_app_name'], redirect_uri: app_seed['oauth_callback_url'])
   application.save!
 end
 
