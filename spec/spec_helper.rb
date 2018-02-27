@@ -31,7 +31,14 @@ ActiveRecord::Migration.maintain_test_schema!
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.before(:each) do
-    stub_const("Twilio::REST::Client", FakeSMS)
+    stub_const('Twilio::REST::Client', FakeSMS)
+
+    Vault.configure do |config|
+      config.address = Rails.application.secrets.vault_adress
+      config.token = Rails.application.secrets.vault_token
+      config.ssl_verify = false
+      config.timeout = 10
+    end
   end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -139,17 +146,7 @@ end
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
-    # Choose a test framework:
     with.test_framework :rspec
-    # with.test_framework :minitest
-    # with.test_framework :minitest_4
-    # with.test_framework :test_unit
-
-    # Choose one or more libraries:
-    with.library :active_record
-    # with.library :active_model
-    # with.library :action_controller
-    # Or, choose the following (which implies all of the above):
     with.library :rails
   end
 end

@@ -2,15 +2,14 @@
 
 describe 'Admin can' do
   let(:member) { create :account }
-  let(:account) { create :account }
+  let(:account) { create :account, role: :admin }
+
+  before(:each) do
+    sign_in account
+    visit admin_accounts_path
+  end
 
   it 'edit roles' do
-    account.update(role: :admin)
-    visit index_path
-    fill_in 'account_email', with: account.email
-    fill_in 'account_password', with: account.password
-    click_on 'Submit'
-    visit admin_accounts_path
     expect(page).to have_content("#{account.email}")
 
     click_link 'Edit'
@@ -20,13 +19,6 @@ describe 'Admin can' do
   end
 
   it 'delete accounts' do
-    account.update(role: :admin)
-    visit index_path
-    fill_in 'account_email', with: account.email
-    fill_in 'account_password', with: account.password
-    click_on 'Submit'
-    visit admin_accounts_path
-
     click_link 'Delete'
     within('div.modal') do
       click_button 'Confirm'

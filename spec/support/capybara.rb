@@ -12,7 +12,7 @@ if ENV.key?('SELENIUM_HOST')
   end
 
   Capybara.app_host   = "http://#{ENV.fetch('TEST_APP_HOST')}:#{ENV.fetch('TEST_APP_PORT')}"
-  Capybara.run_server = false
+  Capybara.run_server = true
 
   RSpec.configure do |config|
     config.before :each, type: :feature do
@@ -45,4 +45,4 @@ end
 
 Capybara.default_driver        = :chrome
 Capybara.javascript_driver     = :chrome
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 10
