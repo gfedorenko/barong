@@ -6,6 +6,20 @@ $(document).ready(function () {
     e.preventDefault()
     $('#email-form').hide()
     $('#passwords-form').fadeIn('fast')
+    email = $('#account_email').val()
+    $.ajax({
+      method: 'GET',
+      data:   {email: email},
+      url:    'display-code',
+      success: function(result){
+        if (result.answer == false){
+          $('#otp').removeAttr('required')
+          $('#otp-code').hide()
+          $('#otp-code').novalidate = true
+          submitBtn.removeClass('disabled')
+        }
+      }
+    })
   })
 
   $('#back').on('click', function (e) {
