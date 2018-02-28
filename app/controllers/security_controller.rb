@@ -9,7 +9,8 @@ class SecurityController < ApplicationController
   end
 
   def display_code
-    render json: { answer: Account.find_by_email(params[:email]).otp_enabled? }
+    account = Account.find_by_email(params[:email])
+    render json: { answer: account.present? && account.otp_enabled? }
   end
 
 end

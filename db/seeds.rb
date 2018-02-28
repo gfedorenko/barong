@@ -8,7 +8,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 admin_email = ENV.fetch('ADMIN_USER', 'admin@barong.io')
 
-admin = Account.create(email: admin_email, password: SecureRandom.hex(20), level: 1, role: 'admin', confirmed_at: Time.now)
+admin = Account.create(email: admin_email, password: SecureRandom.urlsafe_base64, level: 1, role: 'admin', confirmed_at: Time.now)
 
 puts 'Admin credentials: %s' % [admin.password]
 

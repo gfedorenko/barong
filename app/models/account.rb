@@ -26,17 +26,19 @@ class Account < ApplicationRecord
   end
 
   def create_otp
+    raise Vault::VaultError unless Rails.configuration.vault_enabled
     Vault.logical.write("totp/keys/#{uid}", generate: true, issuer: 'Barong', account_name: uid)
   rescue Vault::VaultError
     raise 'Error. OTP service is not available'
   end
 
   def verify_otp(code)
+    raise Vault::VaultError unless Rails.configuration.vault_enabled
     Vault.logical.write("totp/code/#{uid}", code: code).data[:valid]
   end
 
   def otp_enabled?
-    Vault.logical.read("totp/keys/#{uid}").present?
+    Rails.configuration.vault_enabled && Vault.logical.read("totp/keys/#{uid}").present?
   end
 
   def role
