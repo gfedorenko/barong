@@ -38,4 +38,12 @@ window.onload = function () {
           message:  '<div class="dropify-message"> <p>{{ default }}</p> </div>',
       }
   });
+
+  $('#terms-checkbox').on('click', function () {
+    if (this.checked) {
+        $('#sign-up').prop('disabled', false);
+    } else {
+        $('#sign-up').prop('disabled', true);
+    }
+  })
 };

@@ -24,8 +24,13 @@
         <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control form-control-lg underlined', placeholder: 'Password confirmation' %>
       </div>
 
+      <div class="form-group">
+        <input type="checkbox" id="terms-checkbox">
+        <label>I have read and accept the terms and conditions of use</label>
+      </div>
+
       <div class="mt-4">
-        <%= f.submit 'Submit', class: 'btn btn-block btn-success col-6' %>
+        <%= f.submit 'Submit', class: 'btn btn-block btn-success col-6', id: 'sign-up', disabled: true %>
       </div>
     <% end %>
   </div>
