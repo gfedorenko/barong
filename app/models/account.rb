@@ -8,7 +8,7 @@ class Account < ApplicationRecord
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable, :timeoutable
 
   has_one :profile, dependent: :destroy
   has_many :phones, dependent: :destroy
@@ -17,6 +17,13 @@ class Account < ApplicationRecord
 
   validates :email, uniqueness: true
   validates :uid, presence: true, uniqueness: true
+  validate :password_complexity
+
+  def password_complexity
+    if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)./)
+      errors.add :password, "Password must include at least one lowercase letter, one uppercase letter, and one digit"
+    end
+  end
 
   def create_otp
     Vault.logical.write("totp/keys/#{uid}", generate: true, issuer: 'Barong', account_name: uid)
