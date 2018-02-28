@@ -39,7 +39,7 @@ Doorkeeper.configure do
   # The controller Doorkeeper::ApplicationController inherits from.
   # Defaults to ActionController::Base.
   # https://github.com/doorkeeper-gem/doorkeeper#custom-base-controller
-  # base_controller 'ApplicationController'
+  base_controller 'ApplicationController'
 
   # Reuse access token for the same resource owner within an application (disabled by default)
   # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
@@ -106,9 +106,9 @@ Doorkeeper.configure do
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  skip_authorization do |resource_owner, client|
+    client.application.skipauth
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
